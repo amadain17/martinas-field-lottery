@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "description": "Horse Poo Lottery Web Application",
   "scripts": {
-    "dev": "concurrently \"npm run db:start\" \"npm run backend:dev\" \"npm run frontend:dev\"",
-    "dev:quick": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
-    "build": "cd backend && npm run build",
+    "build": "cd backend && npm install && npm run build",
     "start": "cd backend && npm start",
-    "start:prod": "cd backend && npm run build && npm start",
-    "postinstall": "cd backend && npm install",
-    "setup": "npm run install:all && npm run db:setup",
+    "postinstall": "cd backend && npm install"
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../database && npm install",
     "db:start": "docker compose up -d postgres redis",
     "db:stop": "docker compose down",
@@ -37,13 +33,5 @@
     "postgresql"
   ],
   "author": "Mark Devine",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "workspaces": [
-    "backend",
-    "frontend",
-    "database"
-  ]
+  "license": "MIT"
 }
