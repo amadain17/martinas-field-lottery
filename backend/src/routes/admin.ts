@@ -5,6 +5,14 @@ import { emitSquareSelected } from '../services/socket';
 import { validatePaymentIntent } from '../middleware/validation';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { GAME_CONFIG } from '../../../config/gameConfig';
+
+// Helper function to generate position labels
+const getPositionLabel = (gridX: number, gridY: number): string => {
+  const columnLabel = GAME_CONFIG.labels.columns[gridX] || 'A';
+  const rowLabel = GAME_CONFIG.labels.rows[gridY] || 1;
+  return `${columnLabel}${rowLabel}`;
+};
 
 const router = Router();
 
@@ -303,7 +311,6 @@ router.get('/event/:eventId/credits', authenticateAdmin, async (req: Request, re
             square: {
               select: {
                 squareNumber: true,
-                position: true,
                 gridX: true,
                 gridY: true,
               }

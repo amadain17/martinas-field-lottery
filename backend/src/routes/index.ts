@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import eventsRouter from './events';
+import eventsRouter from './events-simple';
 import paymentRouter from './payment';
 import squaresRouter from './squares';
-import adminRouter from './admin';
+import adminRouter from './admin-simple';
 
 const router = Router();
 
