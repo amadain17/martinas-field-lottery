@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "concurrently \"npm run db:start\" \"npm run backend:dev\" \"npm run frontend:dev\"",
     "dev:quick": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
-    "build": "npm run backend:build && npm run frontend:build",
-    "start": "npm run backend:start",
+    "build": "cd backend && npm run build",
+    "start": "cd backend && npm start",
     "start:prod": "cd backend && npm run build && npm start",
-    "postinstall": "npm run install:all",
+    "postinstall": "cd backend && npm install",
     "setup": "npm run install:all && npm run db:setup",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../database && npm install",
     "db:start": "docker compose up -d postgres redis",
