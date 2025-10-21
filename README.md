@@ -206,4 +206,4 @@ MIT License - see LICENSE file for details
 
 ---
 
-**Happy coding! 🎉** If you have questions, check the CLAUDE.md file for detailed development guidance.
+**Happy coding! 🎉** If you have questions, check the CLAUDE.md file for detailed development guidance.# Trigger Railway deployment
