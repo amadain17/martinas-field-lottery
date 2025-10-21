@@ -1,0 +1,309 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.App-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.header-logo {
+  width: 120px;
+  height: auto;
+  max-width: 120px;
+}
+
+.header-text {
+  text-align: left;
+}
+
+.App-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+}
+
+.App-header p {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.map-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.map-section h2 {
+  margin: 0 0 1rem 0;
+  color: #374151;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #000;
+}
+
+.legend-color.available {
+  background-color: #00ff00;
+  opacity: 0.3;
+}
+
+.legend-color.sold {
+  background-color: #ff0000;
+  opacity: 0.3;
+}
+
+.info-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.stat h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+.buy-button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.buy-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3);
+}
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+/* New styles for buy square functionality */
+.event-status {
+  margin-top: 12px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.selling {
+  background: #e8f5e8;
+  color: #27ae60;
+  border: 2px solid #27ae60;
+}
+
+.status-badge.setup {
+  background: #fff3cd;
+  color: #856404;
+  border: 2px solid #ffc107;
+}
+
+.status-badge.live {
+  background: #ffeaea;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+}
+
+.status-badge.ended {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 2px solid #6c757d;
+}
+
+.status-badge.completed {
+  background: #e8f5e8;
+  color: #27ae60;
+  border: 2px solid #27ae60;
+}
+
+.winner-announcement {
+  margin-top: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #2c3e50;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  border: 3px solid #f39c12;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5);
+  }
+}
+
+.error-banner {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 6px;
+  padding: 12px 20px;
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #d63384;
+}
+
+.error-banner button {
+  background: none;
+  border: none;
+  color: #d63384;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.buy-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.how-it-works {
+  text-align: left;
+  margin-top: 1.5rem;
+}
+
+.how-it-works h3 {
+  margin: 0 0 16px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.how-it-works ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.how-it-works li {
+  margin-bottom: 8px;
+  color: #5a6c7d;
+  line-height: 1.5;
+}
+
+/* Grid Labels are now handled by Mapbox - no CSS needed */
+
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .App {
+    padding: 0.5rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .header-text {
+    text-align: center;
+  }
+  
+  .header-logo {
+    width: 80px;
+  }
+  
+  .App-header h1 {
+    font-size: 2rem;
+  }
+  
+  .legend {
+    justify-content: center;
+  }
+}

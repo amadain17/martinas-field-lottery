@@ -1,0 +1,274 @@
+.square-selection-modal {
+  max-width: 800px;
+  max-height: 90vh;
+}
+
+.error-banner {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #d63384;
+}
+
+.error-banner button {
+  background: none;
+  border: none;
+  color: #d63384;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.payment-status {
+  margin-bottom: 20px;
+}
+
+.status-pending {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f39c12;
+  padding: 12px;
+  background: #fefaf0;
+  border-radius: 6px;
+  border-left: 4px solid #f39c12;
+}
+
+.status-confirmed {
+  padding: 12px;
+  background: #f0f9f0;
+  border-radius: 6px;
+  border-left: 4px solid #27ae60;
+  color: #27ae60;
+}
+
+.timer {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f39c12;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.selection-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.customer-info {
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.squares-available {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.squares-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.square-button {
+  aspect-ratio: 1;
+  border: 2px solid #bdc3c7;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  padding: 2px;
+}
+
+.square-button.available {
+  background: #e8f5e8;
+  border-color: #27ae60;
+}
+
+.square-button.available:hover:not(:disabled) {
+  background: #d4edda;
+  border-color: #1e7e34;
+  transform: scale(1.05);
+}
+
+.square-button.taken {
+  background: #ffeaea;
+  border-color: #e74c3c;
+  cursor: not-allowed;
+}
+
+.square-button.selected {
+  background: #3498db !important;
+  border-color: #2980b9 !important;
+  color: white;
+  transform: scale(1.1);
+}
+
+.square-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.square-number {
+  font-weight: bold;
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.square-owner {
+  font-size: 0.5rem;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+.selection-details {
+  margin-bottom: 20px;
+}
+
+.selected-square-info {
+  padding: 16px;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+}
+
+.selected-square-info h4 {
+  margin: 0 0 8px 0;
+  color: #1976d2;
+}
+
+.selected-square-info p {
+  margin: 0;
+  color: #424242;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e5e9;
+}
+
+.cancel-button {
+  flex: 1;
+  padding: 12px 24px;
+  border: 2px solid #bdc3c7;
+  background: white;
+  color: #7f8c8d;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover {
+  border-color: #95a5a6;
+  color: #2c3e50;
+}
+
+.confirm-button {
+  flex: 2;
+  padding: 12px 24px;
+  border: none;
+  background: #3498db;
+  color: white;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.confirm-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .square-selection-modal {
+    max-width: 95vw;
+  }
+  
+  .squares-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+  }
+  
+  .square-button {
+    min-height: 35px;
+    font-size: 0.6rem;
+  }
+  
+  .square-number {
+    font-size: 0.55rem;
+  }
+  
+  .square-owner {
+    font-size: 0.45rem;
+  }
+  
+  .selection-info {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .squares-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+  }
+  
+  .square-button {
+    min-height: 30px;
+    font-size: 0.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+}

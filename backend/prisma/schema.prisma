@@ -1,0 +1,190 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Event configuration
+model Event {
+  id                        String   @id @default(cuid())
+  name                      String
+  fieldCoordinates          String   // GeoJSON string
+  gridRows                  Int
+  gridCols                  Int
+  squarePrice               Decimal  @db.Decimal(10, 2)
+  status                    EventStatus @default(SETUP)
+  selectionTimeoutMinutes   Int      @default(10)
+  videoPlatform             String?  // 'youtube', 'twitch', 'facebook'
+  videoStreamId             String?  // Video ID for platform
+  totalPrizePool            Decimal  @db.Decimal(10, 2)
+  prizeDistribution         PrizeDistribution @default(SPLIT_EQUALLY)
+  fixedPrizePerPoo          Decimal? @db.Decimal(10, 2)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  // Relations
+  squares                   Square[]
+  paymentCredits            PaymentCredit[]
+  pooEvents                 PooEvent[]
+  eventTimeline             EventTimeline[]
+
+  @@map("events")
+}
+
+// Grid squares (generated from config)
+model Square {
+  id                        String   @id @default(cuid())
+  eventId                   String
+  gridX                     Int
+  gridY                     Int
+  squareNumber              Int
+  polygonCoordinates        String   // GeoJSON string
+  status                    SquareStatus @default(AVAILABLE)
+  ownerId                   String?
+  selectedAt                DateTime?
+
+  // Relations
+  event                     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  squarePurchase            SquarePurchase?
+  pooEvents                 PooEvent[]
+
+  @@unique([eventId, squareNumber])
+  @@unique([eventId, gridX, gridY])
+  @@map("squares")
+}
+
+// Payment credits (pay-first system)
+model PaymentCredit {
+  id                        String   @id @default(cuid())
+  eventId                   String
+  customerName              String
+  customerEmail             String
+  customerPhone             String?
+  paymentIntentId           String   @unique
+  amount                    Decimal  @db.Decimal(10, 2)
+  status                    PaymentStatus @default(PENDING)
+  expiresAt                 DateTime
+  createdAt                 DateTime @default(now())
+
+  // Relations
+  event                     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  squarePurchase            SquarePurchase?
+
+  @@map("payment_credits")
+}
+
+// Square ownership (after selection)
+model SquarePurchase {
+  id                        String   @id @default(cuid())
+  squareId                  String   @unique
+  creditId                  String   @unique
+  customerNameInitials      String   // For public display
+  customerFullName          String   // For admin only
+  confirmationCode          String   @unique
+  selectedAt                DateTime @default(now())
+
+  // Relations
+  square                    Square   @relation(fields: [squareId], references: [id], onDelete: Cascade)
+  credit                    PaymentCredit @relation(fields: [creditId], references: [id])
+
+  @@map("square_purchases")
+}
+
+// Poo events (multiple winners possible)
+model PooEvent {
+  id                        String   @id @default(cuid())
+  eventId                   String
+  squareId                  String
+  pooNumber                 Int      // 1st poo, 2nd poo, etc.
+  prizeAmount               Decimal  @db.Decimal(10, 2)
+  announcedAt               DateTime @default(now())
+  adminNotes                String?
+
+  // Relations
+  event                     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  square                    Square   @relation(fields: [squareId], references: [id])
+  winnerNotifications       WinnerNotification[]
+
+  @@unique([eventId, pooNumber])
+  @@map("poo_events")
+}
+
+// Winner notifications (for real-time updates)
+model WinnerNotification {
+  id                        String   @id @default(cuid())
+  pooEventId                String
+  customerEmail             String
+  notificationSent          Boolean  @default(false)
+  sentAt                    DateTime?
+
+  // Relations
+  pooEvent                  PooEvent @relation(fields: [pooEventId], references: [id], onDelete: Cascade)
+
+  @@map("winner_notifications")
+}
+
+// Event timeline (for admin tracking)
+model EventTimeline {
+  id                        String   @id @default(cuid())
+  eventId                   String
+  eventType                 TimelineEventType
+  details                   String   // JSON string
+  timestamp                 DateTime @default(now())
+
+  // Relations
+  event                     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@map("event_timeline")
+}
+
+// Admin users
+model Admin {
+  id                        String   @id @default(cuid())
+  username                  String   @unique
+  passwordHash              String
+  email                     String   @unique
+  createdAt                 DateTime @default(now())
+
+  @@map("admins")
+}
+
+// Enums
+enum EventStatus {
+  SETUP
+  SELLING
+  LIVE
+  ENDED
+}
+
+enum SquareStatus {
+  AVAILABLE
+  TAKEN
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  USED
+  REFUNDED
+  EXPIRED
+}
+
+enum PrizeDistribution {
+  SPLIT_EQUALLY
+  FIXED_PER_POO
+  DESCENDING
+}
+
+enum TimelineEventType {
+  POO_MARKED
+  PRIZE_CALCULATED
+  WINNER_NOTIFIED
+  EVENT_STATUS_CHANGED
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket Test</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="events"></div>
+
+    <script>
+        const socket = io('http://localhost:3001');
+        const statusDiv = document.getElementById('status');
+        const eventsDiv = document.getElementById('events');
+
+        socket.on('connect', () => {
+            statusDiv.innerHTML = `✅ Connected! Socket ID: ${socket.id}`;
+            console.log('Connected to server');
+        });
+
+        socket.on('disconnect', () => {
+            statusDiv.innerHTML = '❌ Disconnected';
+            console.log('Disconnected from server');
+        });
+
+        socket.on('squareSelected', (data) => {
+            console.log('🔔 Received squareSelected event:', data);
+            const eventDiv = document.createElement('div');
+            eventDiv.innerHTML = `🎯 Square ${data.squareNumber} selected by ${data.ownerInitials} at ${data.selectedAt}`;
+            eventsDiv.appendChild(eventDiv);
+        });
+
+        socket.onAny((eventName, ...args) => {
+            if (eventName !== 'connect' && eventName !== 'disconnect') {
+                console.log('🎯 Any event received:', eventName, args);
+            }
+        });
+
+        socket.on('connect_error', (error) => {
+            statusDiv.innerHTML = '🚫 Connection Error: ' + error;
+            console.error('Connection error:', error);
+        });
+    </script>
+</body>
+</html>

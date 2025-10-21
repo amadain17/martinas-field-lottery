@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Generated files
+backend/src/generated/
+database/generated/
+
+# Database files
+*.db
+*.sqlite
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Coverage reports
+coverage/

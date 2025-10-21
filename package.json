@@ -1,0 +1,49 @@
+{
+  "name": "martinas-field",
+  "version": "1.0.0",
+  "description": "Horse Poo Lottery Web Application",
+  "scripts": {
+    "dev": "concurrently \"npm run db:start\" \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "dev:quick": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "build": "npm run backend:build && npm run frontend:build",
+    "start": "npm run backend:start",
+    "start:prod": "cd backend && npm run build && npm start",
+    "postinstall": "npm run install:all",
+    "setup": "npm run install:all && npm run db:setup",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../database && npm install",
+    "db:start": "docker compose up -d postgres redis",
+    "db:stop": "docker compose down",
+    "db:setup": "npm run db:migrate && npm run db:seed",
+    "db:migrate": "cd database && npx prisma migrate dev",
+    "db:seed": "cd backend && npm run seed",
+    "db:studio": "cd database && npx prisma studio",
+    "db:generate": "cd database && npx prisma generate && cd ../backend && npx prisma generate",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:build": "cd backend && npm run build",
+    "backend:start": "cd backend && npm start",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:preview": "cd frontend && npm run preview",
+    "clean": "rm -rf backend/dist frontend/dist */node_modules/.cache",
+    "reset": "npm run db:stop && npm run clean && rm -f **/*.db && npm run install:all"
+  },
+  "keywords": [
+    "lottery",
+    "horse",
+    "web-app",
+    "react",
+    "nodejs",
+    "prisma",
+    "postgresql"
+  ],
+  "author": "Mark Devine",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "backend",
+    "frontend",
+    "database"
+  ]
+}
