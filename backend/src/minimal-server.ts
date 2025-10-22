@@ -53,13 +53,37 @@ app.get('/api/events/demo-event-1', (req, res) => {
     title: 'Demo Horse Poo Lottery',
     status: 'active',
     squarePrice: 10.00,
-    totalSquares: 144
+    totalSquares: 144,
+    startTime: new Date().toISOString(),
+    endTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    fieldCenter: [-6.2297778, 52.9416389],
+    gridDimensions: { cols: 12, rows: 12 }
   });
 });
 
 app.get('/api/events/demo-event-1/squares', (req, res) => {
-  // Return empty squares array for now
-  res.json([]);
+  // Return empty squares array with proper structure
+  const squares = [];
+  for (let row = 0; row < 12; row++) {
+    for (let col = 0; col < 12; col++) {
+      squares.push({
+        id: `square-${row}-${col}`,
+        eventId: 'demo-event-1',
+        gridX: col,
+        gridY: row,
+        position: `${String.fromCharCode(65 + col)}${row + 1}`,
+        isReserved: false,
+        ownerId: null,
+        ownerName: null,
+        paymentCreditId: null,
+        coordinates: [
+          -6.2297778 + (col - 6) * 0.000014,
+          52.9416389 + (row - 6) * 0.000009
+        ]
+      });
+    }
+  }
+  res.json(squares);
 });
 
 // Start server
