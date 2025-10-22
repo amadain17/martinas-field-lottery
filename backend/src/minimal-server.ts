@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || '3001', 10);
+const HOST = process.env.HOST || '0.0.0.0';
 
 // Middleware
 app.use(cors());
@@ -18,12 +19,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Root endpoint
+// Root endpoint (Railway health check)
 app.get('/', (req, res) => {
-  res.json({ 
+  console.log('Health check requested on / endpoint');
+  res.status(200).json({ 
     message: 'Martinas Field Lottery API',
-    status: 'running',
-    endpoints: ['/api/health']
+    status: 'healthy',
+    service: 'martinas-field-backend',
+    timestamp: new Date().toISOString(),
+    endpoints: ['/', '/api/health', '/api/test']
   });
 });
 
@@ -36,9 +40,11 @@ app.get('/api/test', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server listening on port ${PORT}`);
-  console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
+app.listen(PORT, HOST, () => {
+  console.log(`✅ Server listening on ${HOST}:${PORT}`);
+  console.log(`🌐 Health check: http://${HOST}:${PORT}/api/health`);
+  console.log(`🚀 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📦 Service ready for Railway health checks`);
 });
 
 // Handle graceful shutdown
