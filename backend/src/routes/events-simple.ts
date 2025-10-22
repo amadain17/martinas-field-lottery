@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { prisma } from '../prisma';
-import { GAME_CONFIG } from '../../../config/gameConfig';
+import { GAME_CONFIG } from '../config/gameConfig';
 
 const router = Router();
 
