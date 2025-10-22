@@ -48,7 +48,8 @@ app.get('/api/test', (req, res) => {
 
 // Mock lottery endpoints for testing
 app.get('/api/events/demo-event-1', (req, res) => {
-  res.json({
+  console.log('📡 Event API called');
+  const eventData = {
     id: 'demo-event-1',
     title: 'Demo Horse Poo Lottery',
     status: 'active',
@@ -58,10 +59,13 @@ app.get('/api/events/demo-event-1', (req, res) => {
     endTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     fieldCenter: [-6.2297778, 52.9416389],
     gridDimensions: { cols: 12, rows: 12 }
-  });
+  };
+  console.log('📤 Sending event data:', eventData);
+  res.status(200).json(eventData);
 });
 
 app.get('/api/events/demo-event-1/squares', (req, res) => {
+  console.log('📡 Squares API called');
   // Return empty squares array with proper structure
   const squares = [];
   for (let row = 0; row < 12; row++) {
@@ -83,7 +87,8 @@ app.get('/api/events/demo-event-1/squares', (req, res) => {
       });
     }
   }
-  res.json(squares);
+  console.log(`📤 Sending ${squares.length} squares`);
+  res.status(200).json(squares);
 });
 
 // Start server
