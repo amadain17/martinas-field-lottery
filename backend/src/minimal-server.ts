@@ -69,7 +69,8 @@ app.get('/api/events/demo-event-1', (req, res) => {
     gridDimensions: { cols: 12, rows: 12 }
   };
   console.log('📤 Sending event data:', eventData);
-  res.status(200).json(eventData);
+  // Wrap in object to match frontend API expectations
+  res.status(200).json({ event: eventData });
 });
 
 app.get('/api/events/demo-event-1/squares', (req, res) => {
@@ -96,7 +97,8 @@ app.get('/api/events/demo-event-1/squares', (req, res) => {
     }
   }
   console.log(`📤 Sending ${squares.length} squares`);
-  res.status(200).json(squares);
+  // Wrap in object to match frontend API expectations
+  res.status(200).json({ squares: squares });
 });
 
 // Start server
